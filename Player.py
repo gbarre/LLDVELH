@@ -13,6 +13,7 @@ class Player:
     skillPotion: int = 0
     staminaPotion: int = 0
     chancePotion: int = 0
+    inventory = []
 
     def __init__(self,
                  skill: int = 0,
@@ -30,6 +31,7 @@ class Player:
         self.setMaxChance(chance)
         self.gold = gold
         self.provisions = provisions
+        self.inventory = []
 
         if potion == "skill":
             self.skillPotion = 2
@@ -85,6 +87,12 @@ class Player:
             raise Forbidden(description=msg)
         else:
             self.provisions += points
+
+    def updateInventory(self, action, element):
+        if action == "add":
+            self.inventory.append(element)
+        if action == "delete":
+            self.inventory.remove(element)
 
     def drinkSkillPotion(self):
         if self.skillPotion > 0:

@@ -20,55 +20,88 @@
       <div class="row">
         <div class="col-lg-5">
           <h2>Caractéristiques du joueur</h2>
-            <div class="row px-5">
-              <span class="col-6">Habileté</span>
-              <span class="col-3">{{ player.skill }} / {{ player.maxSkill }}</span>
-              <div class="col-3 bg-danger text-center">
-                <a href="./updateSkill?points=-1"><button>-</button></a>&nbsp;
-                <a href="./updateSkill?points=1"><button>+</button></a>
-              </div>
+          <div class="row px-5">
+            <span class="col-6">Habileté</span>
+            <span class="col-3">{{ player.skill }} / {{ player.maxSkill }}</span>
+            <div class="col-3 bg-danger text-center">
+              <a href="./updateSkill?points=-1"><button>-</button></a>&nbsp;
+              <a href="./updateSkill?points=1"><button>+</button></a>
             </div>
-            <div class="row px-5">
-              <span class="col-6">Endurance</span>
-              <span class="col-3">{{ player.stamina }} / {{ player.maxStamina }}</span>
-              <div class="col-3 bg-danger text-center">
-                <a href="./updateStamina?points=-1"><button>-</button></a>&nbsp;
-                <a href="./updateStamina?points=1"><button>+</button></a>
-              </div>
+          </div>
+          <div class="row px-5">
+            <span class="col-6">Endurance</span>
+            <span class="col-3">{{ player.stamina }} / {{ player.maxStamina }}</span>
+            <div class="col-3 bg-danger text-center">
+              <a href="./updateStamina?points=-1"><button>-</button></a>&nbsp;
+              <a href="./updateStamina?points=1"><button>+</button></a>
             </div>
-            <div class="row px-5">
-              <span class="col-6">Chance</span>
-              <span class="col-3">{{ player.chance }} / {{ player.maxChance }}</span>
-              <div class="col-3 bg-danger text-center">
-                <a href="./updateChance?points=-1"><button>-</button></a>&nbsp;
-                <a href="./updateChance?points=1"><button>+</button></a>
-              </div>
+          </div>
+          <div class="row px-5">
+            <span class="col-6">Chance</span>
+            <span class="col-3">{{ player.chance }} / {{ player.maxChance }}</span>
+            <div class="col-3 bg-danger text-center">
+              <a href="./updateChance?points=-1"><button>-</button></a>&nbsp;
+              <a href="./updateChance?points=1"><button>+</button></a>
             </div>
-            <div class="row px-5">
-              <span class="col-6">Or</span>
-              <span class="col-3">{{ player.gold }}</span>
-              <div class="col-3 bg-danger text-center">
-                <a href="./updateGold?po=-1"><button>-</button></a>&nbsp;
-                <a href="./updateGold?po=1"><button>+</button></a>
-              </div>
+          </div>
+          <div class="row px-5">
+            <span class="col-6">Or</span>
+            <span class="col-3">{{ player.gold }}</span>
+            <div class="col-3 bg-danger text-center">
+              <a href="./updateGold?po=-1"><button>-</button></a>&nbsp;
+              <a href="./updateGold?po=1"><button>+</button></a>
             </div>
-            <div class="row px-5">
-              <span class="col-6">Provisions</span>
-              <span class="col-3">{{ player.provisions }}</span>
-              <div class="col-3 bg-danger text-center">
-                <a href="./updateProvisions"><button>-</button></a>&nbsp;
-                <a href="./updateProvisions?points=1"><button>+</button></a>
-              </div>
+          </div>
+          <div class="row px-5">
+            <span class="col-6">Provisions</span>
+            <span class="col-3">{{ player.provisions }}</span>
+            <div class="col-3 bg-danger text-center">
+              <a href="./updateProvisions"><button>-</button></a>&nbsp;
+              <a href="./updateProvisions?points=1"><button>+</button></a>
             </div>
+          </div>
+          <div class="row px-5 mt-3">
+            <span class="col-4">Inventaire</span>
+            <ul class="col-8 px-3">
+{% for element in player.inventory %}
+              <li>
+                {{ element }}&nbsp;&nbsp;
+                <a href="./updateInventory?action=delete&element={{element}}">
+                  <button>-</button>
+                </a>
+              </li>
+{% endfor %}
+              <div class="row">
+                <form action="./updateInventory" method="GET">
+                  <input class="col-7" type="text" name="element" placeholder="Ajouter un élément" />
+                  <input type="hidden" name="action" value="add" />
+                  <button
+                    style="height: 30px; width: 100px;"
+                    class="col-5 bg-success text-white rounded-pill">
+                    Ajouter
+                  </button>
+                </form>
+              </div>
+            </ul>
+          </div>
+          <div class="row mt-3">
+            <a href="./save" class="col">
+              <button
+                style="height: 75px; width: 150px;"
+                class="mx-auto bg-success text-white rounded-pill">
+                Sauvegarder
+              </button>
+            </a>
 {% if player.stamina <= 0 %}
-          <a href="./">
-            <button
-              style="height: 75px; width: 150px;"
-              class="mx-auto bg-success text-white rounded-pill">
-              Nouvelle partie
-            </button>
-          </a>
+            <a href="./" class="col">
+              <button
+                style="height: 75px; width: 150px;"
+                class="mx-auto bg-success text-white rounded-pill">
+                Nouvelle partie
+              </button>
+            </a>
 {% endif %}
+          </div>
         </div>
         <div class="col-lg-7">
           <h2>Actions possibles</h2>

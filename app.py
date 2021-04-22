@@ -2,6 +2,7 @@ from Monster import Monster
 from Player import Player
 from flask import Flask, request, render_template
 from random import randint
+import pickle
 
 app = Flask(__name__)
 player = Player()
@@ -294,6 +295,34 @@ def updatePlayerGold():
         key="Or",
         value=f"{player.gold} ({po})"
     )
+
+
+@app.route("/updateInventory")
+def updateInventory():
+    action = getParam("action")
+    element = getParam("element")
+    player.updateInventory(action, element)
+    return render_template(
+        "updateInventory.html",
+        key="l'inventaire",
+        value=f"{action} '{element}'"
+    )
+
+
+@app.route("/save")
+def save():
+    with open("player.pk1", "wb") as output:
+        pickle.dump(player, output, pickle.HIGHEST_PROTOCOL)
+
+    return render_template("play.html", player=player)
+
+
+@app.route("/load")
+def load():
+    with open("player.pk1", "rb") as input:
+        player = pickle.load(input)
+
+    return render_template("play.html", player=player)
 
 
 def chance():
