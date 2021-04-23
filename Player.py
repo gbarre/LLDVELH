@@ -92,7 +92,7 @@ class Player:
         if action == "add":
             self.inventory.append(element)
         if action == "delete":
-            self.inventory.remove(element)
+            self.inventory.pop(element)
 
     def drinkSkillPotion(self):
         if self.skillPotion > 0:

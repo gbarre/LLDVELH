@@ -1,8 +1,10 @@
+from flask.templating import Environment
 from Monster import Monster
 from Player import Player
 from flask import Flask, request, render_template
 from random import randint
 import pickle
+from base64 import b64decode, b64encode
 
 app = Flask(__name__)
 player = Player()
@@ -31,6 +33,7 @@ def initPlayer():
     player.maxSkill = player.skill
     player.maxStamina = player.stamina
     player.maxChance = player.chance
+    player.inventory = []
 
     return render_template("init.html", player=player)
 
@@ -301,11 +304,16 @@ def updatePlayerGold():
 def updateInventory():
     action = getParam("action")
     element = getParam("element")
+    if action == "add":
+        value = f"+ {element}"
+        element = b64encode(element.encode('ascii'))
+    else:
+        value = f"- {b64decode(player.inventory[element]).decode('ascii')}"
     player.updateInventory(action, element)
     return render_template(
         "updateInventory.html",
         key="l'inventaire",
-        value=f"{action} '{element}'"
+        value=value
     )
 
 
@@ -350,5 +358,10 @@ def getParam(name):
         return arg
 
 
+def decode(element):
+    return b64decode(element).decode('ascii')
+
+
 if __name__ == "__main__":
+    app.add_template_filter(decode)
     app.run(host='0.0.0.0', port=8000, debug=True)

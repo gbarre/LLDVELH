@@ -24,7 +24,7 @@
       </div>
 {% for round in rounds %}
       <div class="row">
-        <span class="col-2 border">{{ loop.index }}</span>
+        <span class="col-2 border">{{ loop.index - 1 }}</span>
         <span class="col-3 border">{{ round['player_score'] }} / {{ round['monster_score'] }}</span>
         <span class="col-3 border"> {{ round['winner'] }} </span>
         <span class="col-4 border">{{ round['player_stamina'] }} / {{ round['monster_stamina'] }}</span>

@@ -65,8 +65,8 @@
             <ul class="col-8 px-3">
 {% for element in player.inventory %}
               <li>
-                {{ element }}&nbsp;&nbsp;
-                <a href="./updateInventory?action=delete&element={{element}}">
+                {{ element | decode }}&nbsp;&nbsp;
+                <a href="./updateInventory?action=delete&element={{loop.index - 1}}">
                   <button>-</button>
                 </a>
               </li>
