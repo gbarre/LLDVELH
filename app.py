@@ -333,6 +333,11 @@ def load():
     return render_template("play.html", player=player)
 
 
+@app.route("/tryChance")
+def tryChance():
+    return render_template("tryChance.html", chance_result=chance())
+
+
 def chance():
     success = True
     if rollDices(dices=2) > player.chance:
